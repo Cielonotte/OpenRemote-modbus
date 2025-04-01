@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Device Data</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Device Data</h1>
+            <p>A list of registered devices.</p>
+        </header>
+
+        <button id="addDeviceButton">Add Device</button>
+
+        <form id="addDeviceForm" style="display: none;">
+            <label for="hostname">Hostname:</label>
+            <input type="text" id="hostname" name="hostname"><br><br>
+            <label for="ipAddress">IP Address:</label>
+            <input type="text" id="ipAddress" name="ipAddress"><br><br>
+            <label for="macAddress">MAC Address:</label>
+            <input type="text" id="macAddress" name="macAddress"><br><br>
+            <label for="registrationDate">Registration Date:</label>
+            <input type="date" id="registrationDate" name="registrationDate"><br><br>
+            <button type="submit">Add</button>
+        </form>
+
+        <table id="deviceTable">
+            <thead>
+                <tr>
+                    <th>Hostname</th>
+                    <th>IP Address</th>
+                    <th>MAC Address</th>
+                    <th>Registration Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <footer>
+            <p>&copy; 2025 Device Data App</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

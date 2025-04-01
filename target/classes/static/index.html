@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Apparaatbeheer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Apparaten</h1>
+            <button id="add-device-btn" class="add-button">+</button>
+        </header>
+
+        <div class="device-table-container">
+            <table id="device-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Naam</th>
+                        <th>Adres</th>
+                        <th>Verbinding</th>
+                        <th>Acties</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+
+        <div id="add-device-form" class="form-overlay">
+            <div class="form-content">
+                <button type="button" class="close-button" id="cancel-btn-overlay">&times;</button>
+                <div id="step-1">
+                    <h2>Apparaat toevoegen (Stap 1)</h2>
+                    <form id="device-form-step-1">
+                        <label for="deviceName">Naam:</label>
+                        <input type="text" id="deviceName" name="deviceName" required><br>
+
+                        <label for="deviceAddress">Adres:</label>
+                        <input type="text" id="deviceAddress" name="deviceAddress" required><br>
+
+                        <label for="connectionLink">Verbinding:</label>
+                        <select id="connectionLink" name="connectionLink" required>
+                            <option value="" disabled selected>Kies een type</option>
+                            <option value="TCP">TCP</option>
+                            <option value="RTU">RTU</option>
+                        </select><br>
+
+                        <button type="button" id="next-btn">Volgende</button>
+                        <button type="button" id="cancel-btn-step-1">Annuleren</button>
+                    </form>
+                </div>
+
+                <div id="step-2" style="display: none;">
+                    <h2>Apparaat toevoegen (Stap 2: Registers)</h2>
+                    <p id="device-info-registers"></p>
+                    <form id="register-form">
+                        <div id="register-fields-container">
+                            <div class="register-field">
+                                <label for="registerType">Type:</label>
+                                <select class="registerType" name="registerType[]">
+                                    <option value="COIL">COIL</option>
+                                    <option value="Register">Register</option>
+                                    <option value="Holder">Holder</option>
+                                </select><br>
+                                <label for="registerNumber">Nummer:</label>
+                                <input type="number" class="registerNumber" name="registerNumber[]"><br>
+                                <label for="registerRefreshRate">Refresh (s):</label>
+                                <input type="number" class="registerRefreshRate" name="registerRefreshRate[]"><br>
+                                <button type="button" class="remove-register-btn">Verwijder</button>
+                            </div>
+                        </div>
+                        <button type="button" id="add-register-btn">Register toevoegen</button><br><br>
+                        <button type="button" id="prev-btn">Vorige</button>
+                        <button type="button" id="submit-device-btn">Apparaat opslaan</button>
+                        <button type="button" id="cancel-btn-step-2">Annuleren</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

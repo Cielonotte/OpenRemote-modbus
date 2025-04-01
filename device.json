@@ -1,0 +1,11 @@
+{
+  "devices": [
+    { "id": 1, "name": "Apparaat 1", "address": "adres1", "connectionLink": "TCP" },
+    { "id": 2, "name": "Apparaat 2", "address": "adres2", "connectionLink": "RTU" }
+  ],
+  "registers": [
+    { "id": 1, "deviceId": 1, "type": "COIL", "number": 10, "refreshRate": 5 },
+    { "id": 2, "deviceId": 1, "type": "Register", "number": 100, "refreshRate": 10 },
+    { "id": 3, "deviceId": 2, "type": "Holder", "number": 200, "refreshRate": 30 }
+  ]
+}

@@ -1,0 +1,56 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+    background-color: #f0f8f0; /* Lichte groene achtergrond */
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2e8b57; /* Donkergroene titel */
+    font-family: 'Arial Black', Gadget, sans-serif;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #c2e0c6; /* Lichte groene rand */
+}
+
+th {
+    background-color: #e0f2e0; /* Lichtgroene header */
+    font-weight: bold;
+    color: #228b22; /* Groene header tekst */
+}
+
+tr:nth-child(even) {
+    background-color: #f0f8f0; /* Lichte groene rijen */
+}
+
+tr:hover {
+    background-color: #d0e8d0; /* Iets donkerdere groene hover */
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px 0;
+    background-color: #e0f2e0; /* Lichtgroene footer */
+    color: #228b22; /* Groene footer tekst */
+    font-size: 0.9em;
+}

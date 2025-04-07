@@ -8,8 +8,7 @@ import com.ghgande.j2mod.modbus.slave.ModbusSlaveFactory;
 
 public class conn_slave {
     public static void start() throws Exception {
-        SimpleProcessImage spi = null;
-        spi = new SimpleProcessImage();
+        SimpleProcessImage spi = new SimpleProcessImage();
         spi.addDigitalOut(new SimpleDigitalOut(false));
 
         ModbusSlave slave = ModbusSlaveFactory.createTCPSlave(5020, 5);

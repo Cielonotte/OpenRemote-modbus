@@ -1,11 +1,58 @@
 {
-  "devices": [
-    { "id": 1, "name": "Apparaat 1", "address": "adres1", "connectionLink": "TCP" },
-    { "id": 2, "name": "Apparaat 2", "address": "adres2", "connectionLink": "RTU" }
-  ],
-  "registers": [
-    { "id": 1, "deviceId": 1, "type": "COIL", "number": 10, "refreshRate": 5 },
-    { "id": 2, "deviceId": 1, "type": "Register", "number": 100, "refreshRate": 10 },
-    { "id": 3, "deviceId": 2, "type": "Holder", "number": 200, "refreshRate": 30 }
-  ]
+  "devices" : [ {
+    "id" : 1,
+    "name" : "Apparaat 1",
+    "address" : "adres1",
+    "connectionLink" : "TCP"
+  }, {
+    "id" : 2,
+    "name" : "Apparaat 2",
+    "address" : "adres2",
+    "connectionLink" : "RTU"
+  }, {
+    "id" : 3,
+    "name" : "Test Apparaat",
+    "address" : "192.168.1.100",
+    "connectionLink" : "http://192.168.1.100"
+  }, {
+    "id" : 4,
+    "name" : null,
+    "address" : null,
+    "connectionLink" : null
+  }, {
+    "id" : 5,
+    "name" : null,
+    "address" : null,
+    "connectionLink" : null
+  }, {
+    "id" : 6,
+    "name" : "PLC",
+    "address" : "4",
+    "connectionLink" : "RTU"
+  } ],
+  "registers" : [ {
+    "id" : 1,
+    "deviceId" : 1,
+    "type" : "COIL",
+    "number" : 10,
+    "refreshRate" : 5
+  }, {
+    "id" : 2,
+    "deviceId" : 1,
+    "type" : "Register",
+    "number" : 100,
+    "refreshRate" : 10
+  }, {
+    "id" : 3,
+    "deviceId" : 2,
+    "type" : "Holder",
+    "number" : 200,
+    "refreshRate" : 30
+  }, {
+    "id" : 4,
+    "deviceId" : 3,
+    "type" : "Holder",
+    "number" : 100,
+    "refreshRate" : 500
+  } ]
 }

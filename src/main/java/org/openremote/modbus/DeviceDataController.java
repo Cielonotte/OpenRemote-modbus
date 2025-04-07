@@ -2,6 +2,8 @@ package org.openremote.modbus;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -15,9 +17,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 @RequestMapping("/api")
 public class DeviceDataController {
 
-    private static final String DATA_FILE = "device.json";
+    private static final String DATA_FILE = "C:\\Users\\tomhe\\Desktop\\HBO ICT\\S2\\Openlearning\\Modbus Ind\\DataDisplay V2\\DataDisplay\\device.json";
     private final AtomicInteger deviceIdCounter = new AtomicInteger(getNextDeviceId());
     private final AtomicInteger registerIdCounter = new AtomicInteger(getNextRegisterId());
+    private static final Logger logger = LoggerFactory.getLogger(DeviceDataController.class);
 
     @GetMapping("/devices")
     public List<Device> getDevices() {
@@ -31,6 +34,7 @@ public class DeviceDataController {
         List<Device> devices = objectMapper().convertValue(data.get("devices"), new TypeReference<List<Device>>() {});
         device.setId(deviceIdCounter.incrementAndGet());
         devices.add(device);
+        data.put("devices", devices);
         saveData(data);
         return device;
     }
@@ -54,6 +58,7 @@ public class DeviceDataController {
         List<Register> registers = objectMapper().convertValue(data.get("registers"), new TypeReference<List<Register>>() {});
         register.setId(registerIdCounter.incrementAndGet());
         registers.add(register);
+        data.put("registers", registers);
         saveData(data);
         return register;
     }
@@ -61,13 +66,19 @@ public class DeviceDataController {
     private Map<String, Object> loadData() {
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(DATA_FILE);
+        logger.info("Proberen data te laden uit bestand: {}", file.getAbsolutePath());
         try {
             if (file.exists()) {
-                return objectMapper.readValue(file, new TypeReference<Map<String, Object>>() {});
+                logger.info("Bestand bestaat. Bezig met lezen...");
+                Map<String, Object> data = objectMapper.readValue(file, new TypeReference<Map<String, Object>>() {});
+                logger.info("Data succesvol geladen: {}", data);
+                return data;
             } else {
+                logger.warn("Bestand niet gevonden. Retourneer initiële data.");
                 return Map.of("devices", new ArrayList<>(), "registers", new ArrayList<>());
             }
         } catch (IOException e) {
+            logger.error("Fout bij het laden van data uit {}: {}", DATA_FILE, e.getMessage(), e);
             throw new RuntimeException("Fout bij het laden van data uit " + DATA_FILE, e);
         }
     }
@@ -75,8 +86,11 @@ public class DeviceDataController {
     private void saveData(Map<String, Object> data) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
+            logger.info("Bezig met opslaan van data naar {}: {}", DATA_FILE, data);
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(DATA_FILE), data);
+            logger.info("Data succesvol opgeslagen.");
         } catch (IOException e) {
+            logger.error("Fout bij het opslaan van data naar {}: {}", DATA_FILE, e.getMessage(), e);
             throw new RuntimeException("Fout bij het opslaan van data naar " + DATA_FILE, e);
         }
     }

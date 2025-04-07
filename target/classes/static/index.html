@@ -1,16 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
-    <title>Apparaatbeheer</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apparaat Register Beheer</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Apparaten</h1>
-            <button id="add-device-btn" class="add-button">+</button>
+            <h1>Apparaat Register Beheer</h1>
+            <button id="add-device-btn" class="add-button">Apparaat Toevoegen</button>
         </header>
 
+        <div id="add-device-form" class="form-overlay">
+            <div class="form-content">
+                <button class="close-button cancel-button">×</button>
+                <h2>Apparaat Toevoegen</h2>
+
+                <!-- Stap 1: Apparaatgegevens -->
+                <div id="device-form-step-1">
+                    <label for="deviceName">Apparaatnaam:</label>
+                    <input type="text" id="deviceName" name="deviceName">
+                    <label for="deviceAddress">Apparaatadres:</label>
+                    <input type="text" id="deviceAddress" name="deviceAddress">
+                    <label for="connectionLink">Verbindingslink:</label>
+                    <input type="text" id="connectionLink" name="connectionLink">
+                    <button id="next-btn">Volgende</button>
+                </div>
+
+                <!-- Stap 2: Registers toevoegen -->
+                <div id="device-form-step-2" style="display: none;">
+                    <div id="device-info-registers"></div>
+
+                    <label for="registerType">Register Type:</label>
+                    <select id="registerType" name="registerType">
+                        <option value="COIL">COIL</option>
+                        <option value="Register">Register</option>
+                        <option value="Holder">Holder</option>
+                    </select>
+
+                    <label for="registerNumber">Register Nummer:</label>
+                    <input type="number" id="registerNumber" name="registerNumber">
+
+                    <label for="refreshRate">Verversingssnelheid (s):</label>
+                    <input type="number" id="refreshRate" name="refreshRate">
+
+                    <button type="button" id="add-register-btn">Register toevoegen</button>
+                    <button id="submit-device-btn">Apparaat Opslaan</button>
+                    <button id="prev-btn">Vorige</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Apparaatlijst -->
         <div class="device-table-container">
             <table id="device-table">
                 <thead>
@@ -23,60 +66,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    </tbody>
+                    <!-- Apparaten worden hier geladen via JavaScript -->
+                </tbody>
             </table>
-        </div>
-
-        <div id="add-device-form" class="form-overlay">
-            <div class="form-content">
-                <button type="button" class="close-button" id="cancel-btn-overlay">&times;</button>
-                <div id="step-1">
-                    <h2>Apparaat toevoegen (Stap 1)</h2>
-                    <form id="device-form-step-1">
-                        <label for="deviceName">Naam:</label>
-                        <input type="text" id="deviceName" name="deviceName" required><br>
-
-                        <label for="deviceAddress">Adres:</label>
-                        <input type="text" id="deviceAddress" name="deviceAddress" required><br>
-
-                        <label for="connectionLink">Verbinding:</label>
-                        <select id="connectionLink" name="connectionLink" required>
-                            <option value="" disabled selected>Kies een type</option>
-                            <option value="TCP">TCP</option>
-                            <option value="RTU">RTU</option>
-                        </select><br>
-
-                        <button type="button" id="next-btn">Volgende</button>
-                        <button type="button" id="cancel-btn-step-1">Annuleren</button>
-                    </form>
-                </div>
-
-                <div id="step-2" style="display: none;">
-                    <h2>Apparaat toevoegen (Stap 2: Registers)</h2>
-                    <p id="device-info-registers"></p>
-                    <form id="register-form">
-                        <div id="register-fields-container">
-                            <div class="register-field">
-                                <label for="registerType">Type:</label>
-                                <select class="registerType" name="registerType[]">
-                                    <option value="COIL">COIL</option>
-                                    <option value="Register">Register</option>
-                                    <option value="Holder">Holder</option>
-                                </select><br>
-                                <label for="registerNumber">Nummer:</label>
-                                <input type="number" class="registerNumber" name="registerNumber[]"><br>
-                                <label for="registerRefreshRate">Refresh (s):</label>
-                                <input type="number" class="registerRefreshRate" name="registerRefreshRate[]"><br>
-                                <button type="button" class="remove-register-btn">Verwijder</button>
-                            </div>
-                        </div>
-                        <button type="button" id="add-register-btn">Register toevoegen</button><br><br>
-                        <button type="button" id="prev-btn">Vorige</button>
-                        <button type="button" id="submit-device-btn">Apparaat opslaan</button>
-                        <button type="button" id="cancel-btn-step-2">Annuleren</button>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 

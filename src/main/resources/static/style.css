@@ -29,7 +29,7 @@ h1 {
 }
 
 .add-button {
-  background-color: #007bff;
+  background-color: #2ecc71; /* groene kleur */
   color: white;
   border: none;
   padding: 12px 20px;
@@ -43,7 +43,7 @@ h1 {
 }
 
 .add-button:hover {
-  background-color: #0056b3;
+  background-color: #27ae60; /* donkerder groen bij hover */
 }
 
 .device-table-container {
@@ -124,7 +124,7 @@ h1 {
 }
 
 .form-content button {
-  background-color: #007bff;
+  background-color: #2ecc71; /* groene kleur */
   color: white;
   border: none;
   padding: 12px 20px;

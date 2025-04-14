@@ -4,13 +4,13 @@ public class Device {
     private int id;
     private String name;
     private String address;
-    private String connectionLink; //TCP of RTU
+    private String connectionLink; // TCP of RTU
 
-    public Device(){
+    // Lege constructor
+    public Device() {
     }
 
-
-    //Constructor
+    // Constructor met parameters
     public Device(int id, String name, String address, String connectionLink) {
         this.id = id;
         this.name = name;
@@ -18,28 +18,15 @@ public class Device {
         this.connectionLink = connectionLink;
     }
 
+    // Getters
+    public int getId() { return id; }
+    public String getName() { return name; }
+    public String getAddress() { return address; }
+    public String getConnectionLink() { return connectionLink; }
 
-    //Getters
-    public int getId(){
-        return id;
-    }
-
-    public String getName(){
-        return name;
-    }
-
-    public String getaddress(){ 
-        return address;
-    }
-
-    public String getConnectionLink() {
-        return connectionLink;
-    }
-
-
-    //Setters
-    public void setId(int id) {this.id = id; }
-    public void setName(String name) {this.name = name;}
-    public void setAddress(String address) {this.address = address;}
-    public void setConnectionLink(String connectionLink) {this.connectionLink = connectionLink;}
+    // Setters
+    public void setId(int id) { this.id = id; }
+    public void setName(String name) { this.name = name; }
+    public void setAddress(String address) { this.address = address; }
+    public void setConnectionLink(String connectionLink) { this.connectionLink = connectionLink; }
 }

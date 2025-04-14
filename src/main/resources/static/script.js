@@ -3,7 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
     setupEventListeners();
 });
 
-let currentDeviceData = {};
+let currentDeviceData = {
+    registers: []
+};
 
 function loadDevices() {
     fetch('/api/devices')
@@ -54,8 +56,8 @@ function setupEventListeners() {
         addDeviceForm.style.display = 'flex';
         deviceFormStep1.style.display = 'block';
         deviceFormStep2.style.display = 'none';
-        document.getElementById('device-form-step-1').reset();
-        currentDeviceData = {};
+        resetForm();
+        currentDeviceData = { registers: [] };
     });
 
     nextButton.addEventListener('click', () => {
@@ -64,11 +66,10 @@ function setupEventListeners() {
         const connectionLink = document.getElementById('connectionLink').value;
 
         if (deviceName && deviceAddress && connectionLink) {
-            currentDeviceData = {
-                name: deviceName,
-                address: deviceAddress,
-                connectionLink: connectionLink
-            };
+            currentDeviceData.name = deviceName;
+            currentDeviceData.address = deviceAddress;
+            currentDeviceData.connectionLink = connectionLink;
+
             deviceInfoRegisters.textContent = `Voeg registers toe voor: ${deviceName}`;
             deviceFormStep1.style.display = 'none';
             deviceFormStep2.style.display = 'block';
@@ -83,28 +84,50 @@ function setupEventListeners() {
     });
 
     submitDeviceButton.addEventListener('click', () => {
+        submitDeviceButton.disabled = true;
+
         fetch('/api/devices', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(currentDeviceData)
         })
-        .then(response => {
-            if (!response.ok) throw new Error('Fout bij toevoegen apparaat');
-            return response.json();
-        })
-        .then(data => {
-            console.log('Apparaat succesvol toegevoegd:', data);
-            currentDeviceData.id = data.id;
+            .then(response => {
+                if (!response.ok) throw new Error('Fout bij toevoegen apparaat');
+                return response.json();
+            })
+            .then(data => {
+                currentDeviceData.id = data.id;
 
-            if (currentDeviceData.id) {
-                deviceInfoRegisters.textContent = `Voeg registers toe voor: ${data.name}`;
-                deviceFormStep1.style.display = 'none';
-                deviceFormStep2.style.display = 'block';
-            } else {
-                alert('Geen apparaat-ID ontvangen van de server.');
-            }
-        })
-        .catch(error => console.error('Fout bij het toevoegen van apparaat:', error));
+                if (!currentDeviceData.id) {
+                    throw new Error('Geen ID ontvangen van de server');
+                }
+
+                // Direct alle registers toevoegen
+                const registerPromises = currentDeviceData.registers.map(register =>
+                    fetch('/api/registers', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ ...register, deviceId: data.id })
+                    })
+                );
+
+                return Promise.all(registerPromises);
+            })
+            .then(() => {
+                console.log('Apparaat & registers succesvol opgeslagen');
+                addDeviceForm.style.display = 'none';
+                deviceFormStep2.style.display = 'none';
+                resetForm();
+                loadDevices();
+                currentDeviceData = { registers: [] };
+            })
+            .catch(error => {
+                alert('Er ging iets mis bij het opslaan: ' + error.message);
+                console.error(error);
+            })
+            .finally(() => {
+                submitDeviceButton.disabled = false;
+            });
     });
 
     addRegisterButton.addEventListener('click', () => {
@@ -112,34 +135,25 @@ function setupEventListeners() {
         const registerNumber = parseInt(document.getElementById('registerNumber').value);
         const refreshRate = parseInt(document.getElementById('refreshRate').value);
 
-        if (currentDeviceData.id && registerType && !isNaN(registerNumber) && !isNaN(refreshRate)) {
+        if (!isNaN(registerNumber) && !isNaN(refreshRate)) {
             const newRegister = {
-                deviceId: currentDeviceData.id,
                 type: registerType,
                 number: registerNumber,
                 refreshRate: refreshRate
             };
 
-            fetch('/api/registers', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newRegister)
-            })
-            .then(response => {
-                if (!response.ok) throw new Error('Fout bij toevoegen register');
-                return response.json();
-            })
-            .then(data => {
-                console.log('Register succesvol toegevoegd:', data);
-                addDeviceForm.style.display = 'none';
-                deviceFormStep2.style.display = 'none';
-                document.getElementById('device-form-step-1').reset();
-                loadDevices();
-                currentDeviceData = {};
-            })
-            .catch(error => console.error('Fout bij het toevoegen van register:', error));
+            currentDeviceData.registers.push(newRegister);
+
+            // Voeg visueel toe aan overzicht
+            const preview = document.createElement('div');
+            preview.textContent = `Type: ${registerType}, Nummer: ${registerNumber}, Verversing: ${refreshRate}s`;
+            document.getElementById('device-info-registers').appendChild(preview);
+
+            // Reset inputvelden
+            document.getElementById('registerNumber').value = '';
+            document.getElementById('refreshRate').value = '';
         } else {
-            alert('Zorg ervoor dat je eerst een apparaat hebt toegevoegd en alle registervelden hebt ingevuld.');
+            alert('Ongeldige input voor register.');
         }
     });
 
@@ -148,6 +162,7 @@ function setupEventListeners() {
             addDeviceForm.style.display = 'none';
             deviceFormStep1.style.display = 'block';
             deviceFormStep2.style.display = 'none';
+            resetForm();
         });
     });
 }
@@ -188,4 +203,14 @@ function addRegisterEventListeners() {
             }
         });
     });
+}
+
+function resetForm() {
+    // Reset alle inputvelden
+    document.getElementById('deviceName').value = '';
+    document.getElementById('deviceAddress').value = '';
+    document.getElementById('connectionLink').value = '';
+    document.getElementById('registerNumber').value = '';
+    document.getElementById('refreshRate').value = '';
+    document.getElementById('device-info-registers').innerHTML = '';
 }

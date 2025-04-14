@@ -196,3 +196,68 @@ h1 {
 .remove-register-btn:hover {
   background-color: #c82333;
 }
+
+/* Voeg een container toe voor de knoppen die verticaal moeten worden uitgelijnd */
+.button-container {
+  display: flex;
+  flex-direction: column;  /* Plaats de knoppen verticaal */
+  gap: 10px;               /* Ruimte tussen de knoppen */
+}
+
+/* Algemeen voor de knoppen */
+.view-registers-btn,
+.edit-registers-btn,
+.save-register-btn,
+.delete-register-btn {
+  background-color: #3498db;  /* Blauwe achtergrond voor knoppen */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover-effecten */
+.view-registers-btn:hover,
+.edit-registers-btn:hover,
+.save-register-btn:hover,
+.delete-register-btn:hover {
+  background-color: #2980b9;  /* Donkerder blauw bij hover */
+}
+
+/* Specifieke styling voor 'Bekijk Registers' en 'Bewerk Registers' */
+.view-registers-btn {
+  background-color: #2ecc71; /* Groene kleur voor 'Bekijk Registers' */
+}
+
+.view-registers-btn:hover {
+  background-color: #27ae60; /* Donkerder groen bij hover */
+}
+
+.edit-registers-btn {
+  background-color: #f39c12; /* Gele kleur voor 'Bewerk Registers' */
+}
+
+.edit-registers-btn:hover {
+  background-color: #e67e22; /* Donkerder geel bij hover */
+}
+
+/* Specifieke styling voor 'Opslaan' en 'Verwijderen' knoppen */
+.save-register-btn {
+  background-color: #2ecc71; /* Groene kleur voor 'Opslaan' */
+}
+
+.save-register-btn:hover {
+  background-color: #27ae60; /* Donkerder groen bij hover */
+}
+
+.delete-register-btn {
+  background-color: #dc3545; /* Rode kleur voor 'Verwijderen' */
+}
+
+.delete-register-btn:hover {
+  background-color: #c82333; /* Donkerder rood bij hover */
+}

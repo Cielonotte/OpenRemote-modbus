@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -43,13 +44,9 @@ public class DeviceDataController {
     public List<Register> getRegistersByDevice(@PathVariable int deviceId) {
         Map<String, Object> data = loadData();
         List<Register> allRegisters = objectMapper().convertValue(data.get("registers"), new TypeReference<List<Register>>() {});
-        List<Register> deviceRegisters = new ArrayList<>();
-        for (Register register : allRegisters) {
-            if (register.getDeviceId() == deviceId) {
-                deviceRegisters.add(register);
-            }
-        }
-        return deviceRegisters;
+        return allRegisters.stream()
+                .filter(register -> register.getDeviceId() == deviceId)
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/registers")
@@ -61,6 +58,37 @@ public class DeviceDataController {
         data.put("registers", registers);
         saveData(data);
         return register;
+    }
+
+    @PutMapping("/registers/{id}")
+    public Register updateRegister(@PathVariable int id, @RequestBody Register updatedRegister) {
+        logger.info("Verzoek ontvangen om register met ID {} te bewerken: {}", id, updatedRegister);
+        Map<String, Object> data = loadData();
+        List<Register> registers = objectMapper().convertValue(data.get("registers"), new TypeReference<List<Register>>() {});
+
+        for (int i = 0; i < registers.size(); i++) {
+            if (registers.get(i).getId() == id) {
+                updatedRegister.setId(id); // Zorg ervoor dat het ID behouden blijft
+                registers.set(i, updatedRegister);
+                saveData(data);
+                logger.info("Register met ID {} succesvol bewerkt: {}", id, updatedRegister);
+                return updatedRegister;
+            }
+        }
+
+        logger.warn("Register met ID {} niet gevonden.", id);
+        throw new RuntimeException("Register met ID " + id + " niet gevonden.");
+    }
+
+    @DeleteMapping("/registers/{id}")
+    public void deleteRegister(@PathVariable int id) {
+        logger.info("Verzoek ontvangen om register met ID {} te verwijderen.", id);
+        Map<String, Object> data = loadData();
+        List<Register> registers = objectMapper().convertValue(data.get("registers"), new TypeReference<List<Register>>() {});
+
+        registers.removeIf(register -> register.getId() == id);
+        saveData(data);
+        logger.info("Register met ID {} succesvol verwijderd.", id);
     }
 
     private Map<String, Object> loadData() {

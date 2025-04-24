@@ -1,7 +1,6 @@
 package org.openremote.modbus.connector;
 
 import com.ghgande.j2mod.modbus.facade.ModbusTCPMaster;
-import com.ghgande.j2mod.modbus.procimg.SimpleInputRegister;
 
 public class tcp_connector {
     public static ModbusTCPMaster master;

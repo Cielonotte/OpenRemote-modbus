@@ -40,6 +40,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+    		<groupId>com.ghgande</groupId>
+    		<artifactId>j2mod</artifactId>
+    		<version>LATEST</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -1,7 +1,6 @@
 package org.openremote.modbus;
 
 import com.ghgande.j2mod.modbus.facade.ModbusTCPMaster;
-import com.ghgande.j2mod.modbus.procimg.SimpleInputRegister;
 
 import java.util.concurrent.TimeUnit;
 

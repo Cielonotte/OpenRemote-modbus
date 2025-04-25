@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.openremote.modbus.connector.socket;
 
 @SpringBootApplication
 @RestController
@@ -22,8 +23,7 @@ public class DeviceDataController {
     @GetMapping("/trigger-actie")
     public String startRelayActiePoc() {
         logger.info("API-endpoint /api/trigger-actie is aangeroepen.");
-        // Hier roep je het Java-bestand aan dat de library gebruikt
-        boolean actieGestart = startRelayViaLibrary();
+        boolean actieGestart = socket.toggle();
         if (actieGestart) {
             return "Relay actie succesvol gesimuleerd!";
         } else {

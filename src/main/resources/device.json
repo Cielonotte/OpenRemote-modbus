@@ -1,0 +1,10 @@
+{
+  "devices" : [ {
+    "id" : 1,
+    "name" : "Modbus Apparaat op 127.0.0.1",
+    "address" : "127.0.0.1",
+    "connectionLink" : "TCP",
+    "refreshRate" : 5
+  } ],
+  "registers" : [ ]
+}

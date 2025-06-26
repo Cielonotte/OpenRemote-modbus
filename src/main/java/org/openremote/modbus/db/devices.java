@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class devices {
     public static JSONArray devices;
-    public static String path = "db/devices.json";
+    public static String path = "db/devices.json"; // Let op: dit pad is relatief t.o.v. waar de app wordt gestart
 
     public static String file = """
 [
@@ -65,7 +65,9 @@ public class devices {
     public static JSONArray init() {
         try {
             JSONParser parser = new JSONParser();
-            Object obj = parser.parse(file);
+            // Let op: Als je de 'file' string gebruikt, wordt er niet van disk gelezen.
+            // Als je van disk wilt lezen, gebruik dan new FileReader(path)
+            Object obj = parser.parse(file); // Parseert de interne string 'file'
             devices = (JSONArray) obj;
             return devices;
         }
@@ -81,9 +83,14 @@ public class devices {
 
     public static JSONArray update(JSONArray attr) {
         try {
+            // Let op: Deze code schrijft de *statische* 'devices' variabele weg,
+            // niet de 'attr' parameter. Als je 'attr' wilt wegschrijven,
+            // moet je 'devices = attr;' toevoegen voor de write-regel.
             new FileWriter(path).write(devices.toJSONString());
+            return devices; // <-- OPLOSSING: Voeg dit toe!
         }
         catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage()); // Voeg logging toe
             return null;
         }
     }

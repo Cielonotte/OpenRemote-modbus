@@ -3,57 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apparaat Register Beheer</title>
+    <title>Modbus Apparaat Beheer</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Apparaat Register Beheer</h1>
-            <button id="add-device-btn" class="add-button">Apparaat Toevoegen</button>
+            <h1>Modbus Apparaat Beheer</h1>
+            <button id="scan-network-btn" class="add-button">Netwerk Scan</button>
         </header>
 
-        <div id="add-device-form" class="form-overlay">
+        <div id="network-scan-form" class="form-overlay">
             <div class="form-content">
                 <button class="close-button cancel-button">×</button>
-                <h2>Apparaat Toevoegen</h2>
+                <h2>Modbus Apparaten Scannen</h2>
 
-                <!-- Stap 1: Apparaatgegevens -->
-                <div id="device-form-step-1">
-                    <label for="deviceName">Apparaatnaam:</label>
-                    <input type="text" id="deviceName" name="deviceName">
-                    <label for="deviceAddress">Apparaatadres:</label>
-                    <input type="text" id="deviceAddress" name="deviceAddress">
-                    <label for="connectionLink">Verbindingslink:</label>
-                    <input type="text" id="connectionLink" name="connectionLink">
-                    <button id="next-btn">Volgende</button>
+                <div id="scan-form-step-1">
+                    <p>Voer het IP-bereik in dat gescand moet worden:</p>
+                    <label for="startIp">Start IP-adres:</label>
+                    <input type="text" id="startIp" name="startIp" value="127.0.0.2">
+                    <label for="endIp">Eind IP-adres:</label>
+                    <input type="text" id="endIp" name="endIp" value="127.0.0.253">
+                    <button id="start-scan-btn">Start Scan</button>
                 </div>
 
-                <!-- Stap 2: Registers toevoegen -->
-                <div id="device-form-step-2" style="display: none;">
-                    <div id="device-info-registers"></div>
-
-                    <label for="registerType">Register Type:</label>
-                    <select id="registerType" name="registerType">
-                        <option value="COIL">COIL</option>
-                        <option value="Register">Register</option>
-                        <option value="Holder">Holder</option>
-                    </select>
-
-                    <label for="registerNumber">Register Nummer:</label>
-                    <input type="number" id="registerNumber" name="registerNumber">
-
-                    <label for="refreshRate">Verversingssnelheid (s):</label>
-                    <input type="number" id="refreshRate" name="refreshRate">
-
-                    <button type="button" id="add-register-btn">Register toevoegen</button>
-                    <button id="submit-device-btn">Apparaat Opslaan</button>
-                    <button id="prev-btn">Vorige</button>
+                <div id="scan-form-step-2" style="display: none;">
+                    <h3>Gevonden Modbus Apparaten:</h3>
+                    <div id="found-devices-list">
+                        <p>Geen apparaten gevonden.</p>
+                    </div>
+                    <button id="save-selected-devices-btn">Geselecteerde Apparaten Opslaan</button>
+                    <button id="back-to-scan-btn">Terug naar Scaninstellingen</button>
                 </div>
             </div>
         </div>
 
-        <!-- Apparaatlijst -->
         <div class="device-table-container">
             <table id="device-table">
                 <thead>
@@ -62,12 +46,11 @@
                         <th>Naam</th>
                         <th>Adres</th>
                         <th>Verbinding</th>
-                        <th>Acties</th>
+                        <th>Verversingssnelheid (s)</th> <th>Acties</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Apparaten worden hier geladen via JavaScript -->
-                </tbody>
+                    </tbody>
             </table>
         </div>
     </div>

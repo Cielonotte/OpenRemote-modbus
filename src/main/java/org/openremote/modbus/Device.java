@@ -5,17 +5,19 @@ public class Device {
     private String name;
     private String address;
     private String connectionLink; // TCP of RTU
+    private int refreshRate; // Nieuw veld!
 
     // Lege constructor
     public Device() {
     }
 
     // Constructor met parameters
-    public Device(int id, String name, String address, String connectionLink) {
+    public Device(int id, String name, String address, String connectionLink, int refreshRate) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.connectionLink = connectionLink;
+        this.refreshRate = refreshRate;
     }
 
     // Getters
@@ -23,10 +25,12 @@ public class Device {
     public String getName() { return name; }
     public String getAddress() { return address; }
     public String getConnectionLink() { return connectionLink; }
+    public int getRefreshRate() { return refreshRate; } // Nieuw!
 
     // Setters
     public void setId(int id) { this.id = id; }
     public void setName(String name) { this.name = name; }
     public void setAddress(String address) { this.address = address; }
     public void setConnectionLink(String connectionLink) { this.connectionLink = connectionLink; }
+    public void setRefreshRate(int refreshRate) { this.refreshRate = refreshRate; } // Nieuw!
 }

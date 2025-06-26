@@ -22,18 +22,25 @@ public class DeviceDataController {
 
     @GetMapping("/trigger-actie")
     public String startRelayActiePoc() {
-        logger.info("API-endpoint /api/trigger-actie is aangeroepen.");
-        boolean actieGestart = socket.toggle();
-        if (actieGestart) {
-            return "Relay actie succesvol gesimuleerd!";
-        } else {
-            return "Fout bij simuleren relay actie.";
+        logger.info("API-endpoint /api/trigger-actie was called");
+
+        boolean toggleRelay = socket.writecoil("10.0.0.103", 502, "tcp", 0, 21760);
+
+        if (!toggleRelay) {
+            return "An error occurred";
         }
+
+        boolean relayStatus = socket.readcoil("10.0.0.103", 502, "tcp", 0);
+
+        if (relayStatus) {
+            return "Relay turned on";
+        }
+        return "Relay turned off";
     }
 
     // Simuleer de aanroep naar het Java-bestand met de library
     private boolean startRelayViaLibrary() {
-        logger.info("Methode startRelayViaLibrary() is uitgevoerd.");
+        logger.info("Methode startRelayViaLibrary() has run successfully");
         // Hier zou de code staan die de library gebruikt om de relay aan te sturen
         // Voor de POC simuleren we dat het gelukt is
         return true;

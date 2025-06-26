@@ -42,9 +42,9 @@
 		</dependency>
 
 		<dependency>
-    		<groupId>com.ghgande</groupId>
-    		<artifactId>j2mod</artifactId>
-    		<version>LATEST</version>
+			<groupId>org.eclipse.paho</groupId>
+			<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+			<version>1.2.5</version>
 		</dependency>
 	</dependencies>
 
